@@ -1,9 +1,13 @@
 package com.example.mybooklistapi.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Setter
+@Getter
 @Entity
 @Table(
         name = "book_author",
@@ -29,27 +33,4 @@ public class BookAuthor {
         this.book = book;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Author getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
 }

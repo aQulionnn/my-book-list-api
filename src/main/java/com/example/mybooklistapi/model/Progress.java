@@ -1,9 +1,13 @@
 package com.example.mybooklistapi.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "progress")
 public class Progress {
@@ -29,43 +33,4 @@ public class Progress {
         this.history = history;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public int getFromPage() {
-        return fromPage;
-    }
-
-    public void setFromPage(int fromPage) {
-        this.fromPage = fromPage;
-    }
-
-    public int getToPage() {
-        return toPage;
-    }
-
-    public void setToPage(int toPage) {
-        this.toPage = toPage;
-    }
-
-    public Integer getReadingYear() {
-        return readingYear;
-    }
-
-    public void setReadingYear(Integer readingYear) {
-        this.readingYear = readingYear;
-    }
-
-    public History getHistory() {
-        return history;
-    }
-
-    public void setHistory(History history) {
-        this.history = history;
-    }
 }

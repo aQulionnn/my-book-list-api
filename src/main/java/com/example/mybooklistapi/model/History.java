@@ -2,9 +2,13 @@ package com.example.mybooklistapi.model;
 
 import com.example.mybooklistapi.enums.BookFormat;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "history")
 public class History {
@@ -56,83 +60,4 @@ public class History {
         this.imprint = imprint;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public BookFormat getFormat() {
-        return format;
-    }
-
-    public void setFormat(BookFormat format) {
-        this.format = format;
-    }
-
-    public Integer getPageCount() {
-        return pageCount;
-    }
-
-    public void setPageCount(Integer pageCount) {
-        this.pageCount = pageCount;
-    }
-
-    public int getReadingOrder() {
-        return readingOrder;
-    }
-
-    public void setReadingOrder(int readingOrder) {
-        this.readingOrder = readingOrder;
-    }
-
-    public int getReadingYear() {
-        return readingYear;
-    }
-
-    public void setReadingYear(int readingYear) {
-        this.readingYear = readingYear;
-    }
-
-    public Integer getReadingSeason() {
-        return readingSeason;
-    }
-
-    public void setReadingSeason(Integer readingSeason) {
-        this.readingSeason = readingSeason;
-    }
-
-    public boolean isReRead() {
-        return reRead;
-    }
-
-    public void setReRead(boolean reRead) {
-        this.reRead = reRead;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public Publisher getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
-    }
-
-    public Imprint getImprint() {
-        return imprint;
-    }
-
-    public void setImprint(Imprint imprint) {
-        this.imprint = imprint;
-    }
 }
