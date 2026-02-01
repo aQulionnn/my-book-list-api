@@ -1,4 +1,4 @@
-package com.example.mybooklistapi.contract;
+package com.example.mybooklistapi.contract.author;
 
 public record UpdateAuthorRequest(
         String firstName,

@@ -1,8 +1,8 @@
 package com.example.mybooklistapi.controller;
 
-import com.example.mybooklistapi.contract.AuthorResponse;
-import com.example.mybooklistapi.contract.CreateAuthorRequest;
-import com.example.mybooklistapi.contract.UpdateAuthorRequest;
+import com.example.mybooklistapi.contract.author.AuthorResponse;
+import com.example.mybooklistapi.contract.author.CreateAuthorRequest;
+import com.example.mybooklistapi.contract.author.UpdateAuthorRequest;
 import com.example.mybooklistapi.mapper.AuthorMapper;
 import com.example.mybooklistapi.service.AuthorService;
 import jakarta.persistence.EntityNotFoundException;
