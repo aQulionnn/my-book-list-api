@@ -3,6 +3,8 @@ package com.example.mybooklistapi.service;
 import com.example.mybooklistapi.model.Book;
 import com.example.mybooklistapi.repository.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +28,8 @@ public class BookService {
     }
 
     @Async
-    public CompletableFuture<List<Book>> getAllAsync() {
-        return CompletableFuture.supplyAsync(bookRepository::findAll);
+    public CompletableFuture<Page<Book>> getAllAsync(Pageable pageable) {
+        return CompletableFuture.completedFuture(bookRepository.findAll(pageable));
     }
 
     @Async

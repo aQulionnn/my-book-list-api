@@ -4,6 +4,9 @@ import com.example.mybooklistapi.contract.book.*;
 import com.example.mybooklistapi.mapper.BookMapper;
 import com.example.mybooklistapi.service.BookService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,13 +35,10 @@ public class BookController {
     }
 
     @GetMapping("")
-    ResponseEntity<List<BookResponse>> getAll() {
-        var future = bookService.getAllAsync();
+    ResponseEntity<Page<BookResponse>> getAll(@ParameterObject Pageable pageable) {
+        var future = bookService.getAllAsync(pageable);
         var books = future.join();
-        var response = books
-                .stream()
-                .map(bookMapper::toResponse)
-                .toList();
+        var response = books.map(bookMapper::toResponse);
 
         return ResponseEntity.ok(response);
     }
