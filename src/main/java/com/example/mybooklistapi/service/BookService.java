@@ -3,6 +3,8 @@ package com.example.mybooklistapi.service;
 import com.example.mybooklistapi.model.Book;
 import com.example.mybooklistapi.repository.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -32,30 +34,26 @@ public class BookService {
         return CompletableFuture.completedFuture(bookRepository.findAll(pageable));
     }
 
-    @Async
-    public CompletableFuture<Optional<Book>> getByIdAsync(UUID id) {
-        return CompletableFuture.supplyAsync(() -> bookRepository.findById(id));
+    @Cacheable(value = "books", key = "#id", unless = "#result == null")
+    public Book getById(UUID id) {
+        return bookRepository.findById(id).orElse(null);
     }
 
-    @Async
-    public CompletableFuture<Void> updateAsync(UUID id, Book updatedBook) {
-        return CompletableFuture.runAsync(() -> {
-            var book = bookRepository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException("Book not found: " + id));
+    @CacheEvict(value = "books", key = "#id")
+    public void update(UUID id, Book updatedBook) {
+        var book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book not found: " + id));
 
-            book.setTitle(updatedBook.getTitle());
-            bookRepository.save(book);
-        });
+        book.setTitle(updatedBook.getTitle());
+        bookRepository.save(book);
     }
 
-    @Async
-    public CompletableFuture<Boolean> deleteAsync(UUID id) {
-        return CompletableFuture.supplyAsync(() -> {
-            if (!bookRepository.existsById(id))
-                return false;
+    @CacheEvict(value = "books", key = "#id")
+    public boolean delete(UUID id) {
+        if (!bookRepository.existsById(id))
+            return false;
 
-            bookRepository.deleteById(id);
-            return true;
-        });
+        bookRepository.deleteById(id);
+        return true;
     }
 }

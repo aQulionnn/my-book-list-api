@@ -45,20 +45,18 @@ public class BookController {
 
     @GetMapping("{id}")
     ResponseEntity<BookResponse> getById(@PathVariable UUID id) {
-        var future = bookService.getByIdAsync(id);
-        var book = future.join();
+        var book = bookService.getById(id);
 
-        if (book.isEmpty())
+        if (book == null)
             return ResponseEntity.notFound().build();
 
-        var response = bookMapper.toResponse(book.get());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(bookMapper.toResponse(book));
     }
 
     @PutMapping("{id}")
     ResponseEntity<Void> update(@PathVariable UUID id, @RequestBody UpdateBookRequest request) {
         try {
-            bookService.updateAsync(id, bookMapper.toEntity(request)).join();
+            bookService.update(id, bookMapper.toEntity(request));
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
@@ -67,10 +65,7 @@ public class BookController {
 
     @DeleteMapping("{id}")
     ResponseEntity<Boolean> delete(@PathVariable UUID id) {
-        var future = bookService.deleteAsync(id);
-        var isDeleted = future.join();
-
-        if (!isDeleted)
+        if (!bookService.delete(id))
             return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok(true);

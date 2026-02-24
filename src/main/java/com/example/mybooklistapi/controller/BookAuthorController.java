@@ -30,16 +30,15 @@ public class BookAuthorController {
 
     @PostMapping("")
     ResponseEntity<BookAuthorResponse> create(@RequestBody CreateBookAuthorRequest request) {
-        var futureBook = bookService.getByIdAsync(request.bookId());
+        var book = bookService.getById(request.bookId());
         var futureAuthor = authorService.getByIdAsync(request.bookId());
 
-        var book = futureBook.join();
         var author = futureAuthor.join();
 
-        if (book.isEmpty() || author.isEmpty())
+        if (book == null || author.isEmpty())
             return ResponseEntity.notFound().build();
 
-        var future = bookAuthorService.createAsync(new BookAuthor(author.get(), book.get()));
+        var future = bookAuthorService.createAsync(new BookAuthor(author.get(), book));
         var createdBookAuthor = future.join();
 
         var response = bookAuthorMapper.toResponse(createdBookAuthor);
