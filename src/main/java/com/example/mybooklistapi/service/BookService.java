@@ -36,6 +36,11 @@ public class BookService {
 
     @Cacheable(value = "books", key = "#id", unless = "#result == null")
     public Book getById(UUID id) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         return bookRepository.findById(id).orElse(null);
     }
 
